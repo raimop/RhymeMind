@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
 import "./Game.css";
 
-interface IProps {
-}
+interface IProps {}
 
 interface IState {
     showField: boolean,
@@ -35,12 +34,14 @@ class Game extends React.Component<IProps, IState> {
 
     handleSubmit = (event: any, defaultButton: boolean = true): void => {
         event.preventDefault();
-        if (defaultButton) this.dispenceSenteceIntoArray();
+        if (defaultButton) {
+            this.dispenceSenteceIntoArray();
+            this.rhymeResponse();
+        }
         this.toggleShowField();
-        this.rhymeResponse();
     }
 
-    dispenceSenteceIntoArray = () => {
+    dispenceSenteceIntoArray = (): void=> {
         const array = this.state.sentenceArray || [];
         console.log(array);
         array.push(this.state.sentence);
@@ -48,14 +49,14 @@ class Game extends React.Component<IProps, IState> {
         this.setState({ ...this.state, sentence: "", sentenceArray: array });
     }
 
-    rhymeResponse = async () => {
+    rhymeResponse = async (): Promise<void> => {
         const url = "/api/rhyme/" + this.state.sentence;
         const response = await fetch(url);
-        let json = await response.json();
+        let json = await response.json().catch(err => console.log(err));
         console.log(json);
     }
 
-    handleChange = (event: any) => {
+    handleChange = (event: any): void=> {
         this.setState({[event.target.name]: event.target.value} as Pick<IState, keyof IState>);
     }
 

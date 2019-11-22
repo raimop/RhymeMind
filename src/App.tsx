@@ -1,16 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import './App.css';
-import Game from './Game';
-import StartScreen from './StartScreen';
+import Game from './pages/Game';
+import StartScreen from './pages/StartScreen';
 
 interface IProps {}
 
-interface IState {
-    counter: number
-}
+interface IState {}
 
-//const App: React.FC = () => {
 class App extends React.Component<IProps, IState> {
   render() {
     return (

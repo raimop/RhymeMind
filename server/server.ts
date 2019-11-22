@@ -1,16 +1,15 @@
-import { returnRhyme, compareRhymes } from "./rhyming";
-const express = require('express');
 import { Request, Response } from 'express';
+const { returnRhyme, compareRhymes } = require("./rhyming");
+const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.get("/api/rhyme/:word", (req: Request, res: Response): Response => {
-    console.log(req.body);
-    return res.send(returnRhyme(req.params.word));
+app.get("/api/rhyme/:sentence", (req: Request, res: Response): Response => {
+    return res.send(returnRhyme(req.params.sentence));
 });
 
-app.get("/api/rhymes/:word1&:word2", (req: Request, res: Response): Response => {
-    return res.send(compareRhymes(req.params.word1, req.params.word2));
+app.get("/api/rhymes/:sentence1&:sentence2", (req: Request, res: Response): Response => {
+    return res.send(compareRhymes(req.params.sentence1, req.params.sentence2));
 });
 
 app.listen(process.env.PORT || PORT, () => {
