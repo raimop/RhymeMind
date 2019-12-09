@@ -7,6 +7,8 @@ interface IState {
     showField: boolean,
     sentence: string,
     sentenceArray: Array<String>
+    premadeSentences: Array<String>
+    sentenceIndex: number,
 }
 
 class Game extends React.Component<IProps, IState> {
@@ -16,8 +18,10 @@ class Game extends React.Component<IProps, IState> {
         this.state = { 
             showField: true,
             sentence: "",
-            sentenceArray: []
-        }
+            sentenceArray: [],
+            premadeSentences: ["test1"],
+            sentenceIndex: 0
+        };
 
         this.toggleShowField = this.toggleShowField.bind(this);
     }
@@ -63,7 +67,7 @@ class Game extends React.Component<IProps, IState> {
     render(): ReactElement {
         return(
             <main>
-                { (this.state.showField) ? <InputField props={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange} /> : <div onClick={(e) => this.handleSubmit(e, false)}>click miiiiiii</div> }
+                { (this.state.showField) ? <InputField sentences={this.state.premadeSentences} props={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange} /> : <div onClick={(e) => this.handleSubmit(e, false)}>click miiiiiii</div> }
                 <ShowHistory props={this.state}/>
             </main>
         )
@@ -77,10 +81,11 @@ interface ShowHistoryProps {
 const ShowHistory: React.FC<ShowHistoryProps> = ({props}) : JSX.Element => {
     return (
         <div>
+            <span>{props.premadeSentences[0]}</span>
         {
             props.sentenceArray.map((item, i) => {
                 let line;
-                if ((i % 2) === 0) line = <div style={{color: "blue", position: "relative", right: "10%"}} key={i}>1 {item} {i}</div>
+                if ((i % 2) === 0) line = <div style={{color: "blue", position: "relative", right: "10%"}} key={i}>1 {props.premadeSentences[0]}{item} {i}</div>
                 else line = <div style={{color: "red", position: "relative", left: "10%"}} key={i}>2 {item} {i}</div>
                 return line
             })
@@ -93,14 +98,16 @@ interface InputFieldProps {
     props: IState,
     handleSubmit: Function,
     handleChange: Function,
+    sentences: Array<String>
 }
 
-const InputField: React.FC <InputFieldProps> = ({ props, handleSubmit, handleChange}) : JSX.Element => {
+const InputField: React.FC <InputFieldProps> = ({ props, handleSubmit, handleChange, sentences}) : JSX.Element => {
     console.log(props);
     console.log("handlesubmit", handleSubmit);
     return (
         <div>
-            <form onSubmit={ e => handleSubmit(e) }>
+            <form onSubmit={ e => handleSubmit(e, "h1") }>
+                <span>{sentences}</span>
                 <input name="sentence" type="text" value={props.sentence} onChange={ e => handleChange(e) }/>
                 <button>SEND</button>
             </form>
