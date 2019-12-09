@@ -1,6 +1,22 @@
 const rhymingPart = require('rhyming-part');
+const rhyme = require('rhyme');
 
-const compareRhyming = (pronounce1: string, pronounce2: string) => {
+exports.returnWords = (word) => {
+
+    let obj = {
+        words: ""
+    };
+    
+    rhyme(function (r) {
+        obj = {
+            words: "hello"
+        };
+    });
+
+    return obj;
+}
+
+const compareRhyming = (pronounce1, pronounce2) => {
     const a = pronounce1.split(" ");
     const b = pronounce2.split(" ");
 
@@ -8,7 +24,7 @@ const compareRhyming = (pronounce1: string, pronounce2: string) => {
 
     let subWordCounter = 0;
     let wordPartMatches = 0;
-    let counterArray: number[][] = [];
+    let counterArray = [];
 
     let shortestArray = a.length;
     let syllableLength = 0;
@@ -18,7 +34,7 @@ const compareRhyming = (pronounce1: string, pronounce2: string) => {
         if (a[a.length-i] == b[b.length-i]) {
             fullMatchCounter++;
         } else { // did not fully match, so check one element at a time
-            a[a.length-i].length >= b[b.length-i].length ? syllableLength = b[b.length-i].length : a[a.length-i].length; // by shortest syllable
+            a[a.length-i].length >= b[b.length-i].length ? syllableLength = b[b.length-i].length : syllableLength = a[a.length-i].length; // by shortest syllable
             counterArray[subWordCounter] = [];
             for (let y = 0; y < syllableLength; y++){ // go through syllable and check if elements fully match starting from the end
                 if (a[a.length-i].substring(syllableLength-y-1, syllableLength-y) === b[b.length-i].substring(syllableLength-y-1, syllableLength-y)){
@@ -36,37 +52,20 @@ const compareRhyming = (pronounce1: string, pronounce2: string) => {
     return `Full matches: ${fullMatchCounter} | Rest matching: ${counterArray}`;
 }
 
-const hasARhyme = (sentence: string): string => {
+const hasARhyme = (sentence) => {
     let pronounce = rhymingPart(sentence);
     if (!pronounce) return "null";
     return pronounce;
 }
 
-interface returnRhymingProps {
-    sentence: string,
-    pronouncation: string,
-}
-
-exports.returnRhyme = (sentence: string): returnRhymingProps => {
+exports.returnRhyme = (sentence) => {
     return { 
         sentence: sentence,
         pronouncation: hasARhyme(sentence),
     };
 }
 
-interface compareRhymingProps {
-    "first": {
-        sentence1: string,
-        pronouncation1: string,
-    },
-    "second": {
-        sentence2: string,
-        pronouncation2: string,
-    },
-    pronouncationsCompared: string,
-}
-
-exports.compareRhymes = (sentence1: string, sentence2: string): compareRhymingProps => {
+exports.compareRhymes = (sentence1, sentence2) => {
     return {
         "first": {
             sentence1: sentence1,
@@ -80,5 +79,3 @@ exports.compareRhymes = (sentence1: string, sentence2: string): compareRhymingPr
         pronouncationsCompared: compareRhyming(hasARhyme(sentence1), hasARhyme(sentence2)),
     }
 }
-
-export {}
