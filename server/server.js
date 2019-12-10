@@ -1,7 +1,8 @@
 const { returnRhyme, compareRhymes, returnWords } = require("./rhyming");
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 8080;
+const path = require('path');
+const PORT = process.env.PORT || 9000;
 
 app.get("/api/rhyme/:sentence", (req, res) => {
     return res.send(returnRhyme(req.params.sentence));

@@ -43,7 +43,7 @@ class Game extends React.Component<IProps, IState> {
 
     dispenceSenteceIntoArray = (): void=> {
         const array = this.state.sentenceArray || [];
-        console.log(array);
+        //console.log(array);
         array.push(this.state.sentence);
         
         this.setState({ ...this.state, sentence: "", sentenceArray: array });
@@ -96,8 +96,8 @@ interface InputFieldProps {
 }
 
 const InputField: React.FC <InputFieldProps> = ({ props, handleSubmit, handleChange}) : JSX.Element => {
-    console.log(props);
-    console.log("handlesubmit", handleSubmit);
+    //console.log(props);
+    //console.log("handlesubmit", handleSubmit);
     return (
         <div>
             <form onSubmit={ e => handleSubmit(e) }>

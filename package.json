@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "rhymemind",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -23,6 +23,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "client": "npm start --prefix client",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -46,5 +47,5 @@
   "devDependencies": {
     "nodemon": "^2.0.0"
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:9000"
 }
