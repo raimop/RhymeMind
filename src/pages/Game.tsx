@@ -57,8 +57,8 @@ class Game extends React.Component<IProps, IState> {
                     toast.error("Hello");
                 } else {
                     this.dispenceSenteceIntoArray();
-                    //this.toggleShowField();
-                    this.computersTurn();
+                    this.dialogueAutoScroll();
+                    setTimeout(()=> this.computersTurn(), 1500);
                 }})
                 .catch(err => console.log(err));
         }
@@ -88,10 +88,11 @@ class Game extends React.Component<IProps, IState> {
 
         this.setState({ sentenceArray: waitArray });
 
+        this.dialogueAutoScroll();
+
         setTimeout(() => {
             if (this.state.computer.length > 0) {
                 waitArray.pop();
-                //const array = this.state.sentenceArray || [];
                 waitArray.push(this.state.computer[0]);
                 this.state.computer.shift();
                 this.setState({...this.state, sentence: ""});
@@ -144,8 +145,8 @@ const ShowHistory: React.FC<ShowHistoryProps> = ({props, funny}) : JSX.Element =
         {
             props.sentenceArray.map((item, i) => {
                 let line;
-                if ((i % 2) === 0) line = <div className="computerText" key={i}>{item}</div>
-                else line = <div className="playerText" key={i}>{item}</div>
+                if ((i % 2) === 0) line = <div className="computerText box sb4" key={i}>{item}</div>
+                else line = <div className="playerText box sb3" key={i}>{item}</div>
                 return line
             })
         }

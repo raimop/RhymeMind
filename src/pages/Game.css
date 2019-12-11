@@ -3,21 +3,52 @@ body, html {
     text-align: center;
 }
 
+.box {
+    background: white;
+    border: 5px solid black;
+}
+
+.sb3:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 5px solid black;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+    border-bottom: 5px solid transparent;
+    left: -4px;
+    bottom: -10px;
+}
+
+.sb4:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 5px solid transparent;
+    border-right: 5px solid black;
+    border-top: 5px solid black;
+    border-bottom: 5px solid transparent;
+    right: -4px;
+    bottom: -10px;
+}
+
 .playerText {
-    width: 200px;
+    width: 20vw;
     color: red;
     position: relative;
     right: 25%;
-    margin: 0 auto;
+    margin: 0 auto 10px;
     font-size: 20px;
 }
 
 .computerText {
-    width: 200px;
+    width: 20vw;
     color: blue;
     position: relative;
     left: 25%;
-    margin: 0 auto;
+    margin: 0 auto 10px;
     font-size: 20px;
 }
 
