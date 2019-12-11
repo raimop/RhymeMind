@@ -2,3 +2,63 @@ body, html {
     margin: 0 auto;
     text-align: center;
 }
+
+.playerText {
+    width: 200px;
+    color: red;
+    position: relative;
+    right: 25%;
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+.computerText {
+    width: 200px;
+    color: blue;
+    position: relative;
+    left: 25%;
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+.input {
+    position: fixed;
+    margin: 0 0 0 0;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input[type=text]{
+    width: 200px;
+}
+
+#scrollable {
+    width: 800px;
+    height: 100px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.shake {
+    animation: shake 0.1s 4;
+    animation-timing-function: linear;
+}
+
+@keyframes shake {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(5deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+@media only screen and (max-width: 800px) {
+    #scrollable {
+        width: 80vw;
+    } 
+}

@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 import "./Game.css";
+import { toast } from "react-toastify"; 
+import 'react-toastify/dist/ReactToastify.css';
 
 interface IProps {}
 
@@ -7,6 +9,12 @@ interface IState {
     showField: boolean,
     sentence: string,
     sentenceArray: Array<String>
+    computer: Array<String>
+}
+
+interface rhymeResponseProps {
+    sentence: string,
+    pronouncation: string
 }
 
 class Game extends React.Component<IProps, IState> {
@@ -16,10 +24,16 @@ class Game extends React.Component<IProps, IState> {
         this.state = { 
             showField: true,
             sentence: "",
-            sentenceArray: []
+            sentenceArray: [],
+            computer: ["funny", "car", "trunk", "fascinating"]
         }
 
         this.toggleShowField = this.toggleShowField.bind(this);
+        this.dialogueAutoScroll = this.dialogueAutoScroll.bind(this);
+    }
+
+    componentDidMount = () => {
+        this.computersTurn();
     }
 
     toggleShowField = (): void => {
@@ -34,26 +48,75 @@ class Game extends React.Component<IProps, IState> {
 
     handleSubmit = (event: any, defaultButton: boolean = true): void => {
         event.preventDefault();
+
         if (defaultButton) {
-            this.dispenceSenteceIntoArray();
-            this.rhymeResponse();
+            this.rhymeResponse().then(res => {
+                if(res.pronouncation === "null"){
+                    console.log("do it again");
+                    this.shakeToggle();
+                    toast.error("Hello");
+                } else {
+                    this.dispenceSenteceIntoArray();
+                    //this.toggleShowField();
+                    this.computersTurn();
+                }})
+                .catch(err => console.log(err));
         }
+    }
+
+    shakeToggle = () => {
+        let e = document.getElementById("input") as HTMLElement;
+        e.className = "shake";
+        e.setAttribute("placeholder", "Try a new word please");
+        setTimeout(() => {
+            e.className = "";
+        }, 500);
+    }
+
+    dialogueAutoScroll = () => {
+        
+        let e = document.getElementById("scrollable") as HTMLElement;
+        if(e) e.scrollTop = e.scrollHeight;
+
+    }
+
+    computersTurn = () => {
         this.toggleShowField();
+
+        const waitArray = this.state.sentenceArray || [];
+        waitArray.push("...");
+
+        this.setState({ sentenceArray: waitArray });
+
+        setTimeout(() => {
+            if (this.state.computer.length > 0) {
+                waitArray.pop();
+                //const array = this.state.sentenceArray || [];
+                waitArray.push(this.state.computer[0]);
+                this.state.computer.shift();
+                this.setState({...this.state, sentence: ""});
+                this.toggleShowField(); 
+            } else {
+                this.gameOver();
+            }
+        }, 2000);
+    }
+    
+    gameOver = () => {
+
     }
 
     dispenceSenteceIntoArray = (): void=> {
         const array = this.state.sentenceArray || [];
-        //console.log(array);
         array.push(this.state.sentence);
-        
         this.setState({ ...this.state, sentence: "", sentenceArray: array });
     }
 
-    rhymeResponse = async (): Promise<void> => {
+    rhymeResponse = async () => {
         const url = "/api/rhyme/" + this.state.sentence;
         const response = await fetch(url);
         let json = await response.json().catch(err => console.log(err));
-        console.log(json);
+        return json;
     }
 
     handleChange = (event: any): void=> {
@@ -63,28 +126,30 @@ class Game extends React.Component<IProps, IState> {
     render(): ReactElement {
         return(
             <main>
-                { (this.state.showField) ? <InputField props={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange} /> : <div onClick={(e) => this.handleSubmit(e, false)}>click miiiiiii</div> }
-                <ShowHistory props={this.state}/>
+                { (this.state.showField) ? <InputField props={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange} /> : null }
+                <ShowHistory props={this.state} funny={this.dialogueAutoScroll}/>
             </main>
         )
     }
 }
 
 interface ShowHistoryProps {
-    props: IState
+    props: IState,
+    funny: Function
 }
 
-const ShowHistory: React.FC<ShowHistoryProps> = ({props}) : JSX.Element => {
+const ShowHistory: React.FC<ShowHistoryProps> = ({props, funny}) : JSX.Element => {
     return (
-        <div>
+        <div id="scrollable">
         {
             props.sentenceArray.map((item, i) => {
                 let line;
-                if ((i % 2) === 0) line = <div style={{color: "blue", position: "relative", right: "10%"}} key={i}>1 {item} {i}</div>
-                else line = <div style={{color: "red", position: "relative", left: "10%"}} key={i}>2 {item} {i}</div>
+                if ((i % 2) === 0) line = <div className="computerText" key={i}>{item}</div>
+                else line = <div className="playerText" key={i}>{item}</div>
                 return line
             })
         }
+        {funny()}
         </div>
     );
 }
@@ -96,12 +161,10 @@ interface InputFieldProps {
 }
 
 const InputField: React.FC <InputFieldProps> = ({ props, handleSubmit, handleChange}) : JSX.Element => {
-    //console.log(props);
-    //console.log("handlesubmit", handleSubmit);
     return (
-        <div>
-            <form onSubmit={ e => handleSubmit(e) }>
-                <input name="sentence" type="text" value={props.sentence} onChange={ e => handleChange(e) }/>
+        <div className="input">
+            <form className="form" onSubmit={ e => handleSubmit(e) }>
+                <input id="input" name="sentence" type="text" placeholder="Try to rhyme with the computer" value={props.sentence} onChange={ e => handleChange(e) }/>
                 <button>SEND</button>
             </form>
         </div>
