@@ -88,6 +88,13 @@ input[type=text]{
     }
   }
 
+.logo {
+    width: 50%;
+    height: 50%;    
+    filter: brightness(0) invert(1);
+    z-index: -1;
+}
+
 @media only screen and (max-width: 800px) {
     #scrollable {
         width: 80vw;

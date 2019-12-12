@@ -2,11 +2,13 @@ import React, { ReactElement } from 'react';
 import "./Game.css";
 import { toast } from "react-toastify"; 
 import 'react-toastify/dist/ReactToastify.css';
+import logo from "../images/test.png";
 
 interface IProps {}
 
 interface IState {
     showField: boolean,
+    showGameOver: boolean,
     sentence: string,
     sentenceArray: Array<String>
     computer: Array<String>
@@ -18,11 +20,13 @@ interface rhymeResponseProps {
 }
 
 class Game extends React.Component<IProps, IState> {
+    timer: number;
     constructor(props: IProps){
         super(props);
 
         this.state = { 
             showField: true,
+            showGameOver: false,
             sentence: "",
             sentenceArray: [],
             computer: ["funny", "car", "trunk", "fascinating"]
@@ -30,6 +34,8 @@ class Game extends React.Component<IProps, IState> {
 
         this.toggleShowField = this.toggleShowField.bind(this);
         this.dialogueAutoScroll = this.dialogueAutoScroll.bind(this);
+
+        this.timer = 1;
     }
 
     componentDidMount = () => {
@@ -49,16 +55,26 @@ class Game extends React.Component<IProps, IState> {
     handleSubmit = (event: any, defaultButton: boolean = true): void => {
         event.preventDefault();
 
+        toast.success("what");
+        toast.success("Success Notification !");
+    
+        toast.error("Error Notification !");
+
+        toast.warn("Warning Notification !");
+
+        toast.info("Info Notification !");
+
         if (defaultButton) {
             this.rhymeResponse().then(res => {
                 if(res.pronouncation === "null"){
                     console.log("do it again");
                     this.shakeToggle();
-                    toast.error("Hello");
                 } else {
                     this.dispenceSenteceIntoArray();
                     this.dialogueAutoScroll();
-                    setTimeout(()=> this.computersTurn(), 1500);
+                    setTimeout(()=> {
+                        this.computersTurn();
+                    }, this.timer);
                 }})
                 .catch(err => console.log(err));
         }
@@ -97,10 +113,11 @@ class Game extends React.Component<IProps, IState> {
                 this.state.computer.shift();
                 this.setState({...this.state, sentence: ""});
                 this.toggleShowField(); 
+                if (this.timer === 1) this.timer = 1500;
             } else {
                 this.gameOver();
             }
-        }, 2000);
+        }, this.timer);
     }
     
     gameOver = () => {
@@ -129,6 +146,7 @@ class Game extends React.Component<IProps, IState> {
             <main>
                 { (this.state.showField) ? <InputField props={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange} /> : null }
                 <ShowHistory props={this.state} funny={this.dialogueAutoScroll}/>
+                <img className="logo" src={logo} alt="Logo" />
             </main>
         )
     }

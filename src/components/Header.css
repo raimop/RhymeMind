@@ -28,6 +28,7 @@
     position: fixed;
     left: 50%;
     transform: translate(-50%);
+    top: 12px;
 }
 
 .buttons > div {
@@ -37,4 +38,22 @@
 
 .header--start {
     margin: 0 15px 0 15px;
+}
+
+@keyframes arrowTurn {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(180deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(-180deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 }
