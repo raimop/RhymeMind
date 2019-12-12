@@ -1,31 +1,24 @@
 import React from 'react';
+import { Link } from "react-router-dom";
+import "./StartScreen.css";
 
 interface IProps {}
 
-interface IState {
-    counter: number
-}
+interface IState {}
 
-class Game extends React.Component<IProps, IState> {
-    constructor(props: IProps){
-        super(props);
-
-        this.state = { 
-            counter: 0
-        }
-
-        this.increaseCounter = this.increaseCounter.bind(this);
-    }
-
-    increaseCounter = () => {
-        this.setState((state) => ({
-            counter: state.counter + 1,
-        }));
-    }
-
+class StartScreen extends React.Component<IProps, IState> {
     render(){
-        return <div onClick={this.increaseCounter}>Increase this number: {this.state.counter}</div>
+        return (
+            <>
+                <div className="start">
+                    <div className="buttons--front">
+                        <Link to="/game"><div className="btn purple buttons--front--start">Start</div></Link>
+                        <Link to="/about"><div className="btn buttons--front--about">About</div></Link>
+                    </div>
+                </div>
+            </>
+        )
     }
 }
 
-export default Game;
+export default StartScreen;

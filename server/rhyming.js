@@ -1,20 +1,4 @@
 const rhymingPart = require('rhyming-part');
-const rhyme = require('rhyme');
-
-exports.returnWords = (word) => {
-
-    let obj = {
-        words: ""
-    };
-    
-    rhyme(function (r) {
-        obj = {
-            words: "hello"
-        };
-    });
-
-    return obj;
-}
 
 const compareRhyming = (pronounce1, pronounce2) => {
     const a = pronounce1.split(" ");

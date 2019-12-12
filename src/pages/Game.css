@@ -2,3 +2,94 @@ body, html {
     margin: 0 auto;
     text-align: center;
 }
+
+.box {
+    background: white;
+    border: 5px solid black;
+}
+
+.sb3:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 5px solid black;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+    border-bottom: 5px solid transparent;
+    left: -4px;
+    bottom: -10px;
+}
+
+.sb4:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 5px solid transparent;
+    border-right: 5px solid black;
+    border-top: 5px solid black;
+    border-bottom: 5px solid transparent;
+    right: -4px;
+    bottom: -10px;
+}
+
+.playerText {
+    width: 20vw;
+    color: red;
+    position: relative;
+    right: 25%;
+    margin: 0 auto 10px;
+    font-size: 20px;
+}
+
+.computerText {
+    width: 20vw;
+    color: blue;
+    position: relative;
+    left: 25%;
+    margin: 0 auto 10px;
+    font-size: 20px;
+}
+
+.input {
+    position: fixed;
+    margin: 0 0 0 0;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input[type=text]{
+    width: 200px;
+}
+
+#scrollable {
+    width: 800px;
+    height: 100px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.shake {
+    animation: shake 0.1s 4;
+    animation-timing-function: linear;
+}
+
+@keyframes shake {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(5deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+@media only screen and (max-width: 800px) {
+    #scrollable {
+        width: 80vw;
+    } 
+}
