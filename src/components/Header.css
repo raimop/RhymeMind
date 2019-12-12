@@ -57,3 +57,21 @@
         transform: rotate(0deg);
     }
 }
+
+@media only screen and (max-width: 800px) {
+    .header:not(:hover){
+        height: 40px;
+    }
+    
+    .header :nth-child(1) { 
+        opacity: 1;
+    }
+
+    .header--start {
+        margin: 0 10px 0 10px;
+    }
+
+    .arrow {
+        display: none;
+    }
+}
