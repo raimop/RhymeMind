@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import "./Game.css";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import logo from "../images/test.png";
 
@@ -24,12 +24,12 @@ class Game extends React.Component<IProps, IState> {
     constructor(props: IProps){
         super(props);
 
-        this.state = { 
+        this.state = {
             showField: true,
             showGameOver: false,
             sentence: "",
             sentenceArray: [],
-            computer: ["funny", "car", "trunk", "fascinating"]
+            computer: ["word","cord","told","bored", "king", "thing", "cake", "wake", "bake", "placed", "taken", "later", "totally", "vocal", "fuck", "duck", "possibility", "lavender", "damage", "car", "far", "apple", "gap", "trap", "nap", "hat", "cap", "total", "bead", "kid", "tree", "free", "animal", "cannibal", "peace", "bullet", "mullet", "tripping", "pry", "fantastic", "flipping"]
         }
 
         this.toggleShowField = this.toggleShowField.bind(this);
@@ -57,7 +57,7 @@ class Game extends React.Component<IProps, IState> {
 
         toast.success("what");
         toast.success("Success Notification !");
-    
+
         toast.error("Error Notification !");
 
         toast.warn("Warning Notification !");
@@ -90,7 +90,7 @@ class Game extends React.Component<IProps, IState> {
     }
 
     dialogueAutoScroll = () => {
-        
+
         let e = document.getElementById("scrollable") as HTMLElement;
         if(e) e.scrollTop = e.scrollHeight;
 
@@ -112,14 +112,14 @@ class Game extends React.Component<IProps, IState> {
                 waitArray.push(this.state.computer[0]);
                 this.state.computer.shift();
                 this.setState({...this.state, sentence: ""});
-                this.toggleShowField(); 
+                this.toggleShowField();
                 if (this.timer === 1) this.timer = 1500;
             } else {
                 this.gameOver();
             }
         }, this.timer);
     }
-    
+
     gameOver = () => {
 
     }
