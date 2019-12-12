@@ -1,40 +1,33 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Header from "./components/Header";
+import Game from "./pages/Game";
+import StartScreen from "./pages/StartScreen";
+import About from "./pages/About";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
-import Game from './pages/Game';
-import StartScreen from './pages/StartScreen';
 
-interface IProps {}
+toast.configure({
+  autoClose: 3000,
+  draggable: false,
+  position: toast.POSITION.BOTTOM_RIGHT,
+});
 
-interface IState {}
-
-class App extends React.Component<IProps, IState> {
-  render() {
+class App extends Component {
+render() {
     return (
-    <Router>
-      <div>
-        <Link to="/">StartScreen</Link> 
-        <Link to="/game">Game</Link>
-
-        {/*
-          A <Switch> looks through all its children <Route>
-          elements and renders the first one whose path
-          matches the current URL. Use a <Switch> any time
-          you have multiple routes, but you want only one
-          of them to render at a time
-        */}
-        <Switch>
-          <Route exact path="/">
-            <StartScreen/>
-          </Route>
-          <Route path="/game">
-            <Game/>
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-    )
-  };
+      <BrowserRouter>
+        <Route path={"/"} component = {Header}/>
+          <Switch>
+              <Route path="/" exact component={StartScreen} />
+              <Route path="/game" exact component={Game} />
+              <Route path="/about" exact component={About} />
+              <Route component={StartScreen} />
+          </Switch>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
