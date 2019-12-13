@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import "./Game.css";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImage from "../images/bg.png";
 import { Link } from 'react-router-dom';
@@ -100,7 +100,7 @@ class Game extends React.Component<IProps, IState> {
     }
 
     dialogueAutoScroll = () => {
-        
+
         let e = document.getElementById("scrollable") as HTMLElement;
         if(e) e.scrollTop = e.scrollHeight;
 
@@ -120,14 +120,14 @@ class Game extends React.Component<IProps, IState> {
                 array.push(this.state.computer[0]);
                 this.state.computer.shift();
                 this.setState({...this.state, sentence: ""});
-                this.toggleShowField(); 
+                this.toggleShowField();
                 if (this.timer === 1) this.timer = 1500;
             } else {
                 this.gameOver();
             }
         }, this.timer);
     }
-    
+
     gameOver = () => {
         this.setState({ showGameOver: !this.state.showGameOver });
     }
