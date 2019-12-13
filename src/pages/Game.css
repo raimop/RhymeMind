@@ -209,7 +209,7 @@ input[type=text]{
         font-size: 18px;
         position: fixed;
         margin: 0 0 0 0;
-        top: 5%;
+        top: 8%;
         left: 5%;
         transform: translate(-50%, -50%);
     }
@@ -242,7 +242,7 @@ input[type=text]{
         font-size: 12px;
         position: fixed;
         margin: 0 0 0 0;
-        top: 5%;
+        top: 8%;
         left: 8%;
         transform: translate(-50%, -50%);
     }
