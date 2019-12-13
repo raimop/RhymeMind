@@ -97,6 +97,24 @@ input[type=text]{
     color: var(--button-color);
 }
 
+.Timer{
+    font-size: 25px;
+    position: fixed;
+    margin: 0 0 0 0;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.score{
+    font-size: 25px;
+    position: fixed;
+    margin: 0 0 0 0;
+    top: 5%;
+    left: 5%;
+    transform: translate(-50%, -50%);
+}
+
 @keyframes shake {
     0% {
       transform: rotate(0deg);
@@ -117,6 +135,25 @@ input[type=text]{
 }
 
 @media only screen and (max-width: 1200px) {
+
+    .Timer{
+        font-size: 18px;
+        position: fixed;
+        margin: 0 0 0 0;
+        top: 75%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .score{
+        font-size: 18px;
+        position: fixed;
+        margin: 0 0 0 0;
+        top: 5%;
+        left: 5%;
+        transform: translate(-50%, -50%);
+    }
+
     #scrollable {
         width: 80vw;
     } 
@@ -131,6 +168,25 @@ input[type=text]{
 }
 
 @media only screen and (max-width: 800px) {
+
+    .Timer{
+        font-size: 12px;
+        position: fixed;
+        margin: 0 0 0 0;
+        top: 75%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .score{
+        font-size: 12px;
+        position: fixed;
+        margin: 0 0 0 0;
+        top: 5%;
+        left: 8%;
+        transform: translate(-50%, -50%);
+    }
+
     #scrollable {
         width: 80vw;
     } 
@@ -145,7 +201,4 @@ input[type=text]{
         transform: translate(-50%, -50%);
     }
 
-    .notification {
-        width: 10%;
-    }
 }

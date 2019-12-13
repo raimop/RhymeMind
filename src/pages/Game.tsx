@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImage from "../images/bg.png";
 import { Link } from 'react-router-dom';
+import Timer from "react-compound-timer";
 
 interface IProps {}
 
@@ -13,7 +14,9 @@ interface IState {
     sentence: string,
     sentenceArray: Array<String>
     computer: Array<String>
-    score: number
+    score: number,
+    timerRunning: boolean,
+    time: number
 }
 
 interface rhymeResponseProps {
@@ -34,6 +37,8 @@ class Game extends React.Component<IProps, IState> {
             sentenceArray: [],
             computer: ["word","cord","told","bored", "king", "thing", "cake", "wake", "bake", "placed", "taken", "later", "totally", "vocal", "fuck", "duck", "possibility", "lavender", "damage", "car", "far", "apple", "gap", "trap", "nap", "hat", "cap", "total", "bead", "kid", "tree", "free", "animal", "cannibal", "peace", "bullet", "mullet", "tripping", "pry", "fantastic", "flipping"],
             score: 0,
+            timerRunning: false,
+            time: 25,
         }
 
         this.previousState = this.state;
@@ -44,8 +49,30 @@ class Game extends React.Component<IProps, IState> {
         this.timer = 1;
     }
 
+    //shuffles an array randomly
+    shuffle = (a: Array<any>) =>{
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        this.setState({
+            computer: a
+        })
+    }
+
     componentDidMount = () => {
         this.computersTurn();
+        this.shuffle(this.state.computer);
+    }
+
+    handleSuccess = () =>{
+        this.handleTimer();
+        this.toggleShowField();
+        this.dispenceSenteceIntoArray();
+        this.dialogueAutoScroll();
+        setTimeout(()=> {
+            this.computersTurn();
+        }, this.timer);
     }
 
     toggleShowField = (): void => {
@@ -66,27 +93,24 @@ class Game extends React.Component<IProps, IState> {
                     toast.error("We don't have a pronouncation for this word, please try another one");
                     this.shakeToggle();
                 } else {
-                    this.toggleShowField();
 
                     // point calculation
-                    this.compareRhymes().then(res => {
+                    this.compareRhymes()
+                        .then(res => {
                         let prevPoints = this.state.score;
-                        this.setState({ score: (this.state.score + res.pronouncationsCompared)});
+
+                        this.setState({ score: (this.state.score + res.pronouncationsCompared * this.state.time)});
 
                         if (prevPoints === this.state.score){
                             toast.info(`You've gained no new points, still got ${this.state.score}`);
                         } else {
-                            toast.success(`You've got ${this.state.score} points now`);
+                            toast.success(`got ${this.state.score} points`);
                         }
                     });
+                    this.handleSuccess();
 
-                    this.dispenceSenteceIntoArray();
-                    this.dialogueAutoScroll();
-                    setTimeout(()=> {
-                        this.computersTurn();
-                    }, this.timer);
-                }})
-                .catch(err => console.log(err));
+            }})
+            .catch(err => console.log(err));
         }
     }
 
@@ -121,6 +145,8 @@ class Game extends React.Component<IProps, IState> {
                 this.state.computer.shift();
                 this.setState({...this.state, sentence: ""});
                 this.toggleShowField();
+                // stops and resets the time
+                this.handleTimer();
                 if (this.timer === 1) this.timer = 1500;
             } else {
                 this.gameOver();
@@ -156,9 +182,33 @@ class Game extends React.Component<IProps, IState> {
         this.setState({[event.target.name]: event.target.value} as Pick<IState, keyof IState>);
     }
 
+    handleTimer = () =>{
+        this.setState({
+            timerRunning: !this.state.timerRunning
+        })
+        //console.log("handletimer called");
+    }
+
+
+    TimeCheckpoint = (value: number) =>{
+        this.setState({
+           time: value
+        });
+        console.log(this.state.time);
+        if(this.state.time === 0){
+            this.setState({
+                sentence: "..."
+            });
+        this.handleSuccess();
+        toast.warn(`You ran out of time`);
+        }
+    }
+
     render(): ReactElement {
         return(
             <main>
+                <div className={"score"}>Score: {this.state.score}</div>
+                {(this.state.showField) ? <TimerComponent TimeCheckpoint={this.TimeCheckpoint} timerRunning={this.state.timerRunning}>Time: </TimerComponent> : null}
                 { (this.state.showField) ? <InputField props={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange} /> : null }
                 <ShowHistory props={this.state} funny={this.dialogueAutoScroll}/>
                 <img className="backgroundImage" src={backgroundImage} alt="backgroundImage" />
@@ -203,6 +253,62 @@ const InputField: React.FC <InputFieldProps> = ({ props, handleSubmit, handleCha
                 <button>SEND</button>
             </form>
         </div>
+    );
+}
+
+interface TimerComponentProps {
+    timerRunning: boolean,
+    TimeCheckpoint: Function
+}
+
+const TimerComponent: React.FC<TimerComponentProps> = ({timerRunning, TimeCheckpoint}): JSX.Element => {
+    return(
+        <>
+            <div className={"Timer"}>
+                <Timer
+                    initialTime={25000} //25 seconds, change time here
+                    direction="backward"
+                    startImmediately={false}
+                    checkpoints={[
+                        {
+                            time: 0,
+                            callback: () => TimeCheckpoint(0),
+                        },
+                        {
+                            time: 5000,
+                            callback: () => TimeCheckpoint(5),
+                        },
+                        {
+                            time: 10000,
+                            callback: () => TimeCheckpoint(10),
+                        },
+                        {
+                            time: 15000,
+                            callback: () => TimeCheckpoint(15),
+                        },
+                        {
+                            time: 20000,
+                            callback: () => TimeCheckpoint(20),
+                        },
+                        {
+                            time: 24000,
+                            callback: () => TimeCheckpoint(25),
+                        },
+                    ]}
+                >
+                    {({reset, start, getTimerState, pause,}:
+                          {reset:any, stop: any, start:any, getTimerState: any, pause: any}) => (
+                        <React.Fragment>
+                            <Timer.Seconds /> seconds
+                            {timerRunning ? start() : pause()}
+                            {timerRunning ? null : reset()}
+                            {/*TimerState: {getTimerState()}*/}
+
+                        </React.Fragment>
+                    )}
+                </Timer>
+            </div>
+        </>
     );
 }
 
