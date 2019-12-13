@@ -233,9 +233,11 @@ input[type=text]{
         font-size: 12px;
         position: fixed;
         margin: 0 0 0 0;
-        top: 75%;
+        top: 8%;
         left: 50%;
         transform: translate(-50%, -50%);
+        color: var(--button-color);
+        font-weight: bolder;
     }
 
     .score{
@@ -259,6 +261,30 @@ input[type=text]{
         top: 50%;
         position: fixed;
         transform: translate(-50%, -50%);
+    }
+
+    .playerText {
+        font-size: 10px;
+    }
+
+    .computerText {
+        font-size: 10px;
+    }
+
+    .sb3:before {
+        left: 0px;
+        bottom: -10px;
+    }
+
+    .sb4:before {
+        right: 0px;
+        bottom: -10px;
+    }
+
+    .game--submit {
+        margin-top: 10px;
+        width: 205px;
+        height: 30px;
     }
 
 }

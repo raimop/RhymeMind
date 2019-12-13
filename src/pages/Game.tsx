@@ -255,7 +255,7 @@ const InputField: React.FC <InputFieldProps> = ({ props, handleSubmit, handleCha
         <div className="input">
             <form className="form" onSubmit={ e => handleSubmit(e) }>
                 <input id="input" name="sentence" type="text" placeholder="Type your best rhyme" value={props.sentence} onChange={ e => handleChange(e) }/>
-                <button>SEND</button>
+                <button className="game--submit">SEND</button>
             </form>
         </div>
     );
