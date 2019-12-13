@@ -1,0 +1,35 @@
+:root {
+  --header-bg: #004445;
+  --header-text: white;
+  --main-bg: #2c7873;
+  --main-text: white;
+  --button-color: #ffd800;
+  --button-border: #6fb98f;
+
+  --ani-from: #ffd800;
+  --ani-to: #ffe176;
+}
+
+.App {
+  text-align: center;
+}
+
+a:any-link {
+  text-decoration: none;
+  color: var(--header-text);
+}
+
+html {
+  background: var(--main-bg);
+  color: var(--main-text);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.center {
+  position: fixed;
+  margin: 0 0 0 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
