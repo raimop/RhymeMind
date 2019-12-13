@@ -198,7 +198,7 @@ class Game extends React.Component<IProps, IState> {
         this.setState({
            time: value
         });
-        console.log(this.state.time);
+        //console.log(this.state.time);
         if(this.state.time === 0){
             this.setState({
                 sentence: "..."
