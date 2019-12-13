@@ -115,6 +115,54 @@ input[type=text]{
     transform: translate(-50%, -50%);
 }
 
+.arrow{
+    font-size: 0;
+    position: fixed;
+    margin: 0 0 0 0;
+    top: 80%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    animation-name: move;
+    animation-duration: 2s;
+    animation-iteration-count:infinite;
+}
+
+@keyframes move {
+    0% {
+        left: 35%;
+    }
+    25%{
+        left: 36%;
+    }
+    50% {
+        left: 35%;
+    }
+    75% {
+        left: 36%;
+    }
+    90%{
+        left: 35%;
+    }
+}
+
+@keyframes moveSmaller {
+    0% {
+        left: 30%;
+    }
+    25%{
+        left: 31%;
+    }
+    50% {
+        left: 30%;
+    }
+    75% {
+        left: 31%;
+    }
+    90%{
+        left: 30%;
+    }
+}
+
 @keyframes shake {
     0% {
       transform: rotate(0deg);
@@ -135,6 +183,18 @@ input[type=text]{
 }
 
 @media only screen and (max-width: 1200px) {
+
+    .arrow{
+        font-size: 0;
+        position: fixed;
+        margin: 0 0 0 0;
+        top: 80%;
+        left: 30%;
+        transform: translate(-50%, -50%);
+        animation-name: moveSmaller;
+        animation-duration: 2s;
+        animation-iteration-count:infinite;
+    }
 
     .Timer{
         font-size: 18px;

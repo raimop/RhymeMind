@@ -5,6 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import backgroundImage from "../images/bg.png";
 import { Link } from 'react-router-dom';
 import Timer from "react-compound-timer";
+// @ts-ignore
+import Arrow from "react-arrow";
+
 
 interface IProps {}
 
@@ -98,13 +101,14 @@ class Game extends React.Component<IProps, IState> {
                     this.compareRhymes()
                         .then(res => {
                         let prevPoints = this.state.score;
-
-                        this.setState({ score: (this.state.score + res.pronouncationsCompared * this.state.time)});
+                        let currentSentence = this.state.sentenceArray[this.state.sentenceArray.length -1];
+                        let currentScore =  res.pronouncationsCompared * (currentSentence.length + this.state.time);
+                        this.setState({ score:this.state.score + currentScore});
 
                         if (prevPoints === this.state.score){
-                            toast.info(`You've gained no new points, still got ${this.state.score}`);
+                            toast.info(`You've gained no new points for that rhyme`);
                         } else {
-                            toast.success(`got ${this.state.score} points`);
+                            toast.success(`got ${currentScore} points`);
                         }
                     });
                     this.handleSuccess();
@@ -207,6 +211,7 @@ class Game extends React.Component<IProps, IState> {
     render(): ReactElement {
         return(
             <main>
+                {(this.state.showField) ? <ArrowComponent></ArrowComponent> : null}
                 <div className={"score"}>Score: {this.state.score}</div>
                 {(this.state.showField) ? <TimerComponent TimeCheckpoint={this.TimeCheckpoint} timerRunning={this.state.timerRunning}>Time: </TimerComponent> : null}
                 { (this.state.showField) ? <InputField props={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange} /> : null }
@@ -307,6 +312,25 @@ const TimerComponent: React.FC<TimerComponentProps> = ({timerRunning, TimeCheckp
                         </React.Fragment>
                     )}
                 </Timer>
+            </div>
+        </>
+    );
+}
+
+const ArrowComponent: React.FC = (): JSX.Element => {
+    return(
+        <>
+            <div className={"arrow"}>
+                <Arrow
+                direction="right"
+                shaftWidth={20}
+                shaftLength={50}
+                headWidth={50}
+                headLength={40}
+                fill="white"
+                stroke="black"
+                strokeWidth={3}
+            />
             </div>
         </>
     );
