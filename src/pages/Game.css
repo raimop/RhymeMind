@@ -145,5 +145,7 @@ input[type=text]{
         transform: translate(-50%, -50%);
     }
 
-
+    .notification {
+        width: 10%;
+    }
 }
