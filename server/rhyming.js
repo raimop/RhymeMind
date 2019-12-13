@@ -15,7 +15,7 @@ const compareRhyming = (pronounce1, pronounce2) => {
     a.length >= b.length ? shortestArray = b.length : shortestArray = a.length; // determine shortest array
 
     for (let i = 1; i < shortestArray+1; i++){ // go through shortest array and check last pronouncations
-        if (a[a.length-i] == b[b.length-i]) {
+        if (a[a.length-i] === b[b.length-i]) {
             fullMatchCounter++;
         } else { // did not fully match, so check one element at a time
             a[a.length-i].length >= b[b.length-i].length ? syllableLength = b[b.length-i].length : syllableLength = a[a.length-i].length; // by shortest syllable
@@ -31,9 +31,12 @@ const compareRhyming = (pronounce1, pronounce2) => {
         }
     }
 
-    console.log(counterArray);
+    //console.log(counterArray);
 
-    return `Full matches: ${fullMatchCounter} | Rest matching: ${counterArray}`;
+    console.log(`Full matches: ${fullMatchCounter} - ${b.reverse()}`);
+    console.log(`Full matches: ${fullMatchCounter} - ${a.reverse()}`);
+
+    return fullMatchCounter;
 }
 
 const hasARhyme = (sentence) => {

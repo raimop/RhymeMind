@@ -9,9 +9,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 toast.configure({
-  autoClose: 3000,
-  draggable: false,
+  autoClose: 4000,
+  draggable: true,
   position: toast.POSITION.BOTTOM_RIGHT,
+  className: 'notification',
 });
 
 class App extends Component {

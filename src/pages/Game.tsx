@@ -2,7 +2,8 @@ import React, { ReactElement } from 'react';
 import "./Game.css";
 import { toast } from "react-toastify"; 
 import 'react-toastify/dist/ReactToastify.css';
-import logo from "../images/test.png";
+import backgroundImage from "../images/bg.png";
+import { Link } from 'react-router-dom';
 
 interface IProps {}
 
@@ -12,6 +13,7 @@ interface IState {
     sentence: string,
     sentenceArray: Array<String>
     computer: Array<String>
+    score: number
 }
 
 interface rhymeResponseProps {
@@ -21,16 +23,20 @@ interface rhymeResponseProps {
 
 class Game extends React.Component<IProps, IState> {
     timer: number;
+    previousState: Readonly<IState>;
     constructor(props: IProps){
         super(props);
 
         this.state = { 
-            showField: true,
+            showField: false,
             showGameOver: false,
             sentence: "",
             sentenceArray: [],
-            computer: ["funny", "car", "trunk", "fascinating"]
+            computer: ["word","cord","told","bored", "king", "thing", "cake", "wake", "bake", "placed", "taken", "later", "totally", "vocal", "fuck", "duck", "possibility", "lavender", "damage", "car", "far", "apple", "gap", "trap", "nap", "hat", "cap", "total", "bead", "kid", "tree", "free", "animal", "cannibal", "peace", "bullet", "mullet", "tripping", "pry", "fantastic", "flipping"],
+            score: 0,
         }
+
+        this.previousState = this.state;
 
         this.toggleShowField = this.toggleShowField.bind(this);
         this.dialogueAutoScroll = this.dialogueAutoScroll.bind(this);
@@ -43,33 +49,37 @@ class Game extends React.Component<IProps, IState> {
     }
 
     toggleShowField = (): void => {
-        this.state.showField === true ? this.toggleHelper(false) : this.toggleHelper(true);
-    }
-
-    toggleHelper = (input: boolean): void => {
-        this.setState({
-            showField: input,
-        });
+        this.setState({ showField: !this.state.showField});
     }
 
     handleSubmit = (event: any, defaultButton: boolean = true): void => {
         event.preventDefault();
 
-        toast.success("what");
-        toast.success("Success Notification !");
-    
-        toast.error("Error Notification !");
+        if (this.state.sentenceArray[this.state.sentenceArray.length-1] === this.state.sentence) {
+            toast.info("You can't rhyme with the same word, I mean, you can, but don't");
+            this.shakeToggle();
+        }
 
-        toast.warn("Warning Notification !");
-
-        toast.info("Info Notification !");
-
-        if (defaultButton) {
+        if (defaultButton && !(this.state.sentenceArray[this.state.sentenceArray.length-1] === this.state.sentence)) {
             this.rhymeResponse().then(res => {
                 if(res.pronouncation === "null"){
-                    console.log("do it again");
+                    toast.error("We don't have a pronouncation for this word, please try another one");
                     this.shakeToggle();
                 } else {
+                    this.toggleShowField();
+
+                    // point calculation
+                    this.compareRhymes().then(res => {
+                        let prevPoints = this.state.score;
+                        this.setState({ score: (this.state.score + res.pronouncationsCompared)});
+
+                        if (prevPoints === this.state.score){
+                            toast.info(`You've gained no new points, still got ${this.state.score}`);
+                        } else {
+                            toast.success(`You've got ${this.state.score} points now`);
+                        }
+                    });
+
                     this.dispenceSenteceIntoArray();
                     this.dialogueAutoScroll();
                     setTimeout(()=> {
@@ -97,19 +107,17 @@ class Game extends React.Component<IProps, IState> {
     }
 
     computersTurn = () => {
-        this.toggleShowField();
+        const array = this.state.sentenceArray || [];
+        array.push("...");
 
-        const waitArray = this.state.sentenceArray || [];
-        waitArray.push("...");
-
-        this.setState({ sentenceArray: waitArray });
+        this.setState({ sentenceArray: array });
 
         this.dialogueAutoScroll();
 
         setTimeout(() => {
             if (this.state.computer.length > 0) {
-                waitArray.pop();
-                waitArray.push(this.state.computer[0]);
+                array.pop();
+                array.push(this.state.computer[0]);
                 this.state.computer.shift();
                 this.setState({...this.state, sentence: ""});
                 this.toggleShowField(); 
@@ -121,7 +129,7 @@ class Game extends React.Component<IProps, IState> {
     }
     
     gameOver = () => {
-
+        this.setState({ showGameOver: !this.state.showGameOver });
     }
 
     dispenceSenteceIntoArray = (): void=> {
@@ -137,6 +145,13 @@ class Game extends React.Component<IProps, IState> {
         return json;
     }
 
+    compareRhymes = async () => {
+        const url = "/api/rhymes/" + this.state.sentence + "&" + this.state.sentenceArray[this.state.sentenceArray.length-1];
+        const response = await fetch(url);
+        let json = await response.json().catch(err => console.log(err));
+        return json;
+    }
+
     handleChange = (event: any): void=> {
         this.setState({[event.target.name]: event.target.value} as Pick<IState, keyof IState>);
     }
@@ -146,7 +161,8 @@ class Game extends React.Component<IProps, IState> {
             <main>
                 { (this.state.showField) ? <InputField props={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange} /> : null }
                 <ShowHistory props={this.state} funny={this.dialogueAutoScroll}/>
-                <img className="logo" src={logo} alt="Logo" />
+                <img className="backgroundImage" src={backgroundImage} alt="backgroundImage" />
+                { (this.state.showGameOver) ? <Link to="/"><div className="gameover"><div>Game over, click me</div></div></Link> : null }
             </main>
         )
     }
@@ -183,7 +199,7 @@ const InputField: React.FC <InputFieldProps> = ({ props, handleSubmit, handleCha
     return (
         <div className="input">
             <form className="form" onSubmit={ e => handleSubmit(e) }>
-                <input id="input" name="sentence" type="text" placeholder="Try to rhyme with the computer" value={props.sentence} onChange={ e => handleChange(e) }/>
+                <input id="input" name="sentence" type="text" placeholder="Type your best rhyme" value={props.sentence} onChange={ e => handleChange(e) }/>
                 <button>SEND</button>
             </form>
         </div>

@@ -6,6 +6,7 @@ body, html {
 .box {
     background: white;
     border: 5px solid black;
+    border-radius: 25px;
 }
 
 .sb3:before {
@@ -76,6 +77,26 @@ input[type=text]{
     animation-timing-function: linear;
 }
 
+.gameover {
+    position: absolute;
+    width: 80vw;
+    height: 100vh;
+    background: var(--header-bg);
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+
+.gameover > div {
+    left: 50%;
+    top: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    color: var(--button-color);
+}
+
 @keyframes shake {
     0% {
       transform: rotate(0deg);
@@ -88,15 +109,43 @@ input[type=text]{
     }
   }
 
-.logo {
+.backgroundImage {
     width: 50%;
     height: 50%;    
     filter: brightness(0) invert(1);
     z-index: -1;
 }
 
+@media only screen and (max-width: 1200px) {
+    #scrollable {
+        width: 80vw;
+    } 
+
+    .backgroundImage {   
+        z-index: -1;
+        left: 50%;
+        top: 50%;
+        position: fixed;
+        transform: translate(-50%, -50%);
+    }
+}
+
 @media only screen and (max-width: 800px) {
     #scrollable {
         width: 80vw;
     } 
+
+    .backgroundImage {   
+        min-width: 400px;
+        filter: brightness(0) invert(1);
+        z-index: -1;
+        left: 50%;
+        top: 50%;
+        position: fixed;
+        transform: translate(-50%, -50%);
+    }
+
+    .notification {
+        width: 10%;
+    }
 }
