@@ -233,7 +233,7 @@ input[type=text]{
         font-size: 12px;
         position: fixed;
         margin: 0 0 0 0;
-        top: 8%;
+        top: 10%;
         left: 50%;
         transform: translate(-50%, -50%);
         color: var(--button-color);
@@ -244,7 +244,7 @@ input[type=text]{
         font-size: 12px;
         position: fixed;
         margin: 0 0 0 0;
-        top: 8%;
+        top: 10%;
         left: 8%;
         transform: translate(-50%, -50%);
     }
