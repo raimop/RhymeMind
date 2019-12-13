@@ -38,7 +38,7 @@ class Game extends React.Component<IProps, IState> {
             showGameOver: false,
             sentence: "",
             sentenceArray: [],
-            computer: ["word","cord","told","bored", "king", "thing", "cake", "wake", "bake", "placed", "taken", "later", "totally", "vocal", "fuck", "duck", "possibility", "lavender", "damage", "car", "far", "apple", "gap", "trap", "nap", "hat", "cap", "total", "bead", "kid", "tree", "free", "animal", "cannibal", "peace", "bullet", "mullet", "tripping", "pry", "fantastic", "flipping"],
+            computer: ["word","cord","told","bored", "king", "thing", "cake", "wake", "bake", "placed", "taken", "later", "totally", "vocal", "fascinating", "duck", "possibility", "lavender", "damage", "generating", "liberating", "accommodating", "accelerating", "subordinating", "exasperating", "coordinating", "cap", "total", "bead", "kid", "tree", "free", "animal", "cannibal", "peace", "bullet", "mullet", "tripping", "pry", "fantastic", "flipping"],
             score: 0,
             timerRunning: false,
             time: 25,
