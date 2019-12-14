@@ -19,7 +19,9 @@
     "react-scripts": "3.3.0",
     "react-toastify": "^5.4.1",
     "rhyming-part": "^1.1.0",
-    "typescript": "^3.7.3"
+    "txtgen": "^2.2.4",
+    "typescript": "^3.7.3",
+    "wordpos": "^1.2.0"
   },
   "scripts": {
     "startScript": "react-scripts start",

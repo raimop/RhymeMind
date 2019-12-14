@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Timer from "react-compound-timer";
 // @ts-ignore
 import Arrow from "react-arrow";
-
+import {generateSentence} from "../components/textGenerator";
 
 interface IProps {}
 
@@ -134,6 +134,10 @@ class Game extends React.Component<IProps, IState> {
 
     }
 
+    computersSentence = () =>{
+      return generateSentence();
+    };
+
     computersTurn = () => {
         const array = this.state.sentenceArray || [];
         array.push("...");
@@ -145,7 +149,7 @@ class Game extends React.Component<IProps, IState> {
         setTimeout(() => {
             if (this.state.computer.length > 0) {
                 array.pop();
-                array.push(this.state.computer[0]);
+                array.push(this.computersSentence());
                 this.state.computer.shift();
                 this.setState({...this.state, sentence: ""});
                 this.toggleShowField();

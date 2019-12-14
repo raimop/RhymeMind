@@ -51,6 +51,7 @@ body, html {
     left: 25%;
     margin: 0 auto 10px;
     font-size: 20px;
+    padding: 5px;
 }
 
 .input {
@@ -67,7 +68,7 @@ input[type=text]{
 
 #scrollable {
     width: 800px;
-    height: 100px;
+    height: 200px;
     overflow: hidden;
     margin: 0 auto;
 }
