@@ -1,13 +1,15 @@
 import {setTemplates, sentence, setNouns, setAdjectives} from "txtgen";
 import {adjectives, nouns, verbs} from "./words";
 
-var randomVerb = verbs[Math.floor(Math.random()*verbs.length)];
+let randomVerb = () =>{
+    return verbs[Math.floor(Math.random()*verbs.length)];
+};
 
 const templates = [
     'Your {{noun}} is a {{noun}}',
     'Dont run your {{noun}}, instead listen {{noun}}',
     'Now escape while you can, you {{adjective}} {{noun}}',
-    `try to ${randomVerb} me you {{noun}}, ill ${randomVerb} you {{noun}}`
+    `try to ${randomVerb()} me you {{noun}}, ill ${randomVerb()} you {{noun}}`
 ];
 
 setTemplates(templates);
