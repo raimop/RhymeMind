@@ -1,24 +1,26 @@
 import React, { ReactElement } from 'react';
-import "./Game.css";
-import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 import backgroundImage from "../images/bg.png";
 import { Link } from 'react-router-dom';
-import Timer from "react-compound-timer";
-// @ts-ignore
-import Arrow from "react-arrow";
 import {generateSentence} from "../components/textGenerator";
+import ShowHistory from "../components/Game/ShowHistory";
+import InputField from "../components/Game/InputField";
+import TimerComponent from "../components/Game/TimerComponent";
+import ArrowComponent from "../components/Game/ArrowComponent";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import "./Game.css";
 
 interface IProps {}
 
 interface IState {
-    showField: boolean,
-    showGameOver: boolean,
-    sentence: string,
+    showField: boolean
+    showGameOver: boolean
+    sentence: string
     sentenceArray: Array<String>
     computer: Array<String>
-    score: number,
-    timerRunning: boolean,
+    level: number
+    score: number
+    timerRunning: boolean
     time: number
 }
 
@@ -30,6 +32,7 @@ interface rhymeResponseProps {
 class Game extends React.Component<IProps, IState> {
     timer: number;
     previousState: Readonly<IState>;
+    sentence: string | number | string[] | undefined;
     constructor(props: IProps){
         super(props);
 
@@ -38,7 +41,8 @@ class Game extends React.Component<IProps, IState> {
             showGameOver: false,
             sentence: "",
             sentenceArray: [],
-            computer: ["word","cord","told","bored", "king", "thing", "cake", "wake", "bake", "placed", "taken", "later", "totally", "vocal", "fascinating", "duck", "possibility", "lavender", "damage", "generating", "liberating", "accommodating", "accelerating", "subordinating", "exasperating", "coordinating", "cap", "total", "bead", "kid", "tree", "free", "animal", "cannibal", "peace", "bullet", "mullet", "tripping", "pry", "fantastic", "flipping"],
+            computer: ["we", "me", "be"],
+            level: 0,
             score: 0,
             timerRunning: false,
             time: 25,
@@ -50,6 +54,18 @@ class Game extends React.Component<IProps, IState> {
         this.dialogueAutoScroll = this.dialogueAutoScroll.bind(this);
 
         this.timer = 1;
+    }
+
+    levels = (level: number) => {
+        //const level0 = ["we", "me", "as", "be", "he"];
+        if (level === 1) return ["cap", "kid", "pry", "mad", "lab", "man", "fan", "red", "que", "zoo"];
+        if (level === 2) return ["look", "said", "sand", "fast", "mice", "cast", "king", "hand", "book", "true"];
+        if (level === 3) return ["bored", "thing", "taken", "later", "vocal", "total", "peace", "chase", "taste", "toast"];
+
+        //const level3 = [];
+        //const level4 = [];
+
+        //const originalArray = ["word","cord","told","bored", "king", "thing", "cake", "wake", "bake", "placed", "taken", "later", "totally", "vocal", "fascinating", "duck", "possibility", "lavender", "damage", "generating", "liberating", "accommodating", "accelerating", "subordinating", "exasperating", "coordinating", "cap", "total", "bead", "kid", "tree", "free", "animal", "cannibal", "peace", "bullet", "mullet", "tripping", "pry", "fantastic", "flipping"];
     }
 
     //shuffles an array randomly
@@ -65,7 +81,7 @@ class Game extends React.Component<IProps, IState> {
 
     componentDidMount = () => {
         this.computersTurn();
-        this.shuffle(this.state.computer);
+            
     }
 
     handleSuccess = () =>{
@@ -157,7 +173,19 @@ class Game extends React.Component<IProps, IState> {
                 this.handleTimer();
                 if (this.timer === 1) this.timer = 1500;
             } else {
-                this.gameOver();
+                array.pop();
+                let computerArray = this.levels(this.state.level+1);
+                if (computerArray === undefined) {
+                    computerArray = [];
+                    this.gameOver();
+                }
+                
+                this.setState({ 
+                    sentenceArray: array, 
+                    level: this.state.level+1,
+                    computer: computerArray });
+                this.levels(this.state.level);
+                this.computersTurn();
             }
         }, this.timer);
     }
@@ -194,7 +222,6 @@ class Game extends React.Component<IProps, IState> {
         this.setState({
             timerRunning: !this.state.timerRunning
         })
-        //console.log("handletimer called");
     }
 
 
@@ -202,7 +229,6 @@ class Game extends React.Component<IProps, IState> {
         this.setState({
            time: value
         });
-        //console.log(this.state.time);
         if(this.state.time === 0){
             this.setState({
                 sentence: "..."
@@ -216,128 +242,16 @@ class Game extends React.Component<IProps, IState> {
         return(
             <main>
                 {(this.state.showField) ? <ArrowComponent></ArrowComponent> : null}
+                <div className={"level"}>Level: {this.state.level}</div>
                 <div className={"score"}>Score: {this.state.score}</div>
-                {(this.state.showField) ? <TimerComponent TimeCheckpoint={this.TimeCheckpoint} timerRunning={this.state.timerRunning}>Time: </TimerComponent> : null}
                 { (this.state.showField) ? <InputField props={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange} /> : null }
+                {(this.state.showField) ? <TimerComponent TimeCheckpoint={this.TimeCheckpoint} timerRunning={this.state.timerRunning}>Time: </TimerComponent> : null}
                 <ShowHistory props={this.state} funny={this.dialogueAutoScroll}/>
                 <img className="backgroundImage" src={backgroundImage} alt="backgroundImage" />
                 { (this.state.showGameOver) ? <Link to="/"><div className="gameover"><div>Game over, click me</div></div></Link> : null }
             </main>
         )
     }
-}
-
-interface ShowHistoryProps {
-    props: IState,
-    funny: Function
-}
-
-const ShowHistory: React.FC<ShowHistoryProps> = ({props, funny}) : JSX.Element => {
-    return (
-        <div id="scrollable">
-        {
-            props.sentenceArray.map((item, i) => {
-                let line;
-                if ((i % 2) === 0) line = <div className="computerText box sb4" key={i}>{item}</div>
-                else line = <div className="playerText box sb3" key={i}>{item}</div>
-                return line
-            })
-        }
-        {funny()}
-        </div>
-    );
-}
-
-interface InputFieldProps {
-    props: IState,
-    handleSubmit: Function,
-    handleChange: Function,
-}
-
-const InputField: React.FC <InputFieldProps> = ({ props, handleSubmit, handleChange}) : JSX.Element => {
-    return (
-        <div className="input">
-            <form className="form" onSubmit={ e => handleSubmit(e) }>
-                <input autoFocus id="input"  name="sentence" type="text" placeholder="Type your best rhyme" value={props.sentence} onChange={ e => handleChange(e) }/>
-                <button className="game--submit">SEND</button>
-            </form>
-        </div>
-    );
-}
-
-interface TimerComponentProps {
-    timerRunning: boolean,
-    TimeCheckpoint: Function
-}
-
-const TimerComponent: React.FC<TimerComponentProps> = ({timerRunning, TimeCheckpoint}): JSX.Element => {
-    return(
-        <>
-            <div className={"Timer"}>
-                <Timer
-                    initialTime={25000} //25 seconds, change time here
-                    direction="backward"
-                    startImmediately={false}
-                    checkpoints={[
-                        {
-                            time: 0,
-                            callback: () => TimeCheckpoint(0),
-                        },
-                        {
-                            time: 5000,
-                            callback: () => TimeCheckpoint(5),
-                        },
-                        {
-                            time: 10000,
-                            callback: () => TimeCheckpoint(10),
-                        },
-                        {
-                            time: 15000,
-                            callback: () => TimeCheckpoint(15),
-                        },
-                        {
-                            time: 20000,
-                            callback: () => TimeCheckpoint(20),
-                        },
-                        {
-                            time: 24000,
-                            callback: () => TimeCheckpoint(25),
-                        },
-                    ]}
-                >
-                    {({reset, start, getTimerState, pause,}:
-                          {reset:any, stop: any, start:any, getTimerState: any, pause: any}) => (
-                        <React.Fragment>
-                            <Timer.Seconds /> seconds
-                            {timerRunning ? start() : pause()}
-                            {timerRunning ? null : reset()}
-                            {/*TimerState: {getTimerState()}*/}
-
-                        </React.Fragment>
-                    )}
-                </Timer>
-            </div>
-        </>
-    );
-}
-
-const ArrowComponent: React.FC = (): JSX.Element => {
-    return(
-        <>
-            <div className={"arrow"}>
-                <Arrow
-                direction="right"
-                shaftWidth={20}
-                shaftLength={50}
-                headWidth={50}
-                headLength={40}
-                fill="white"
-                stroke="black"
-                strokeWidth={3}
-            />
-            </div>
-        </>
-    );
 }
 
 export default Game;

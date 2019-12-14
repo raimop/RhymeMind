@@ -4,21 +4,39 @@ import "./Header.css";
 
 interface IProps {}
 
-interface IState {}
+interface IState {
+    showHeaderArrow: boolean,
+}
 
 class Header extends React.Component<IProps, IState> {
+    constructor(props: IProps){
+        super(props);
+
+        this.state = {
+            showHeaderArrow: true
+        }
+    }
+
+    toggleHeaderArrow = () => {
+        this.setState({ showHeaderArrow: !this.state.showHeaderArrow });
+    }
+
+    showMaskMan = (foo: any) => {
+        console.log(foo);
+    }
 
     render(){
         return (
             <>
-                <div className="header">
+                <div className="header" data-foo="sammy" onFocus={ this.toggleHeaderArrow }>
+
                     <div className="buttons">
                         <div><Link to="/">Start screen</Link></div>
                         <div className="header--start"><Link to="/game">Start Game</Link></div>
                         <div><Link to="/about">About</Link></div>
                     </div>
                 </div>
-                <div className="arrow">^</div>
+                { (this.state.showHeaderArrow) ? <div className="header--arrow">^ menu</div> : null }
             </>
         )
     }

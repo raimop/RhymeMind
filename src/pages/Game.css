@@ -102,18 +102,33 @@ input[type=text]{
     font-size: 25px;
     position: fixed;
     margin: 0 0 0 0;
-    top: 75%;
+    top: 85%;
     left: 50%;
     transform: translate(-50%, -50%);
+    color: var(--button-color);
+    font-weight: bolder;
 }
 
 .score{
     font-size: 25px;
     position: fixed;
     margin: 0 0 0 0;
+    top: 14%;
+    left: 5%;
+    transform: translate(-50%, -50%);
+    color: var(--button-color);
+    font-weight: bolder;
+}
+
+.level{
+    font-size: 25px;
+    position: fixed;
+    margin: 0 0 0 0;
     top: 8%;
     left: 5%;
     transform: translate(-50%, -50%);
+    color: var(--button-color);
+    font-weight: bolder;
 }
 
 .arrow{
@@ -199,20 +214,20 @@ input[type=text]{
 
     .Timer{
         font-size: 18px;
-        position: fixed;
-        margin: 0 0 0 0;
-        top: 75%;
+        top: 85%;
         left: 50%;
-        transform: translate(-50%, -50%);
     }
 
     .score{
         font-size: 18px;
-        position: fixed;
-        margin: 0 0 0 0;
         top: 8%;
         left: 5%;
-        transform: translate(-50%, -50%);
+    }
+
+    .level{
+        font-size: 18px;
+        top: 12%;
+        left: 5%;
     }
 
     #scrollable {
@@ -220,6 +235,7 @@ input[type=text]{
     } 
 
     .backgroundImage {   
+        min-width: 600px;
         z-index: -1;
         left: 50%;
         top: 50%;
@@ -231,23 +247,24 @@ input[type=text]{
 @media only screen and (max-width: 800px) {
 
     .Timer{
+        width: 80px;
         font-size: 12px;
-        position: fixed;
-        margin: 0 0 0 0;
-        top: 10%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: var(--button-color);
-        font-weight: bolder;
+        top: 18px;
+        left: 85%;
     }
 
     .score{
-        font-size: 12px;
-        position: fixed;
-        margin: 0 0 0 0;
-        top: 10%;
+        font-size: 10px;
+        top: 26px;
         left: 8%;
-        transform: translate(-50%, -50%);
+        float: left;
+    }
+
+    .level {
+        font-size: 10px;
+        top: 16px;
+        left: 8%;
+        float: left;
     }
 
     #scrollable {
@@ -255,7 +272,8 @@ input[type=text]{
     } 
 
     .backgroundImage {   
-        min-width: 400px;
+        min-width: 500px;
+        min-height: 300px;
         filter: brightness(0) invert(1);
         z-index: -1;
         left: 50%;
@@ -265,27 +283,21 @@ input[type=text]{
     }
 
     .playerText {
+        width: 30vw;
+        right: 20%;
         font-size: 10px;
     }
-
+    
     .computerText {
+        width: 30vw;
+        left: 20%;
         font-size: 10px;
     }
 
-    .sb3:before {
-        left: 0px;
-        bottom: -10px;
-    }
-
-    .sb4:before {
-        right: 0px;
-        bottom: -10px;
-    }
 
     .game--submit {
         margin-top: 10px;
         width: 205px;
         height: 30px;
     }
-
 }
