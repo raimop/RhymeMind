@@ -44,7 +44,7 @@ input[type=text]{
     font-size: 25px;
     position: fixed;
     margin: 0 0 0 0;
-    top: 75%;
+    top: 85%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--button-color);
@@ -156,7 +156,7 @@ input[type=text]{
 
     .Timer{
         font-size: 18px;
-        top: 75%;
+        top: 85%;
         left: 50%;
     }
 

@@ -240,8 +240,8 @@ class Game extends React.Component<IProps, IState> {
                 {(this.state.showField) ? <ArrowComponent></ArrowComponent> : null}
                 <div className={"level"}>Level: {this.state.level}</div>
                 <div className={"score"}>Score: {this.state.score}</div>
-                {(this.state.showField) ? <TimerComponent TimeCheckpoint={this.TimeCheckpoint} timerRunning={this.state.timerRunning}>Time: </TimerComponent> : null}
                 { (this.state.showField) ? <InputField props={this.state} handleSubmit={this.handleSubmit} handleChange={this.handleChange} /> : null }
+                {(this.state.showField) ? <TimerComponent TimeCheckpoint={this.TimeCheckpoint} timerRunning={this.state.timerRunning}>Time: </TimerComponent> : null}
                 <ShowHistory props={this.state} funny={this.dialogueAutoScroll}/>
                 <img className="backgroundImage" src={backgroundImage} alt="backgroundImage" />
                 { (this.state.showGameOver) ? <Link to="/"><div className="gameover"><div>Game over, click me</div></div></Link> : null }
