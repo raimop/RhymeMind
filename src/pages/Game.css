@@ -3,56 +3,6 @@ body, html {
     text-align: center;
 }
 
-.box {
-    background: white;
-    border: 5px solid black;
-    border-radius: 25px;
-}
-
-.sb3:before {
-    content: "";
-    width: 0px;
-    height: 0px;
-    position: absolute;
-    border-left: 5px solid black;
-    border-right: 5px solid transparent;
-    border-top: 5px solid black;
-    border-bottom: 5px solid transparent;
-    left: 0px;
-    bottom: -8px;
-}
-
-.sb4:before {
-    content: "";
-    width: 0px;
-    height: 0px;
-    position: absolute;
-    border-left: 5px solid transparent;
-    border-right: 5px solid black;
-    border-top: 5px solid black;
-    border-bottom: 5px solid transparent;
-    right: 0px;
-    bottom: -8px;
-}
-
-.playerText {
-    width: 20vw;
-    color: red;
-    position: relative;
-    right: 25%;
-    margin: 0 auto 10px;
-    font-size: 20px;
-}
-
-.computerText {
-    width: 20vw;
-    color: blue;
-    position: relative;
-    left: 25%;
-    margin: 0 auto 10px;
-    font-size: 20px;
-}
-
 .input {
     position: fixed;
     margin: 0 0 0 0;
@@ -63,13 +13,6 @@ body, html {
 
 input[type=text]{
     width: 200px;
-}
-
-#scrollable {
-    width: 800px;
-    height: 100px;
-    overflow: hidden;
-    margin: 0 auto;
 }
 
 .shake {
@@ -104,15 +47,30 @@ input[type=text]{
     top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
+    color: var(--button-color);
+    font-weight: bolder;
 }
 
 .score{
     font-size: 25px;
     position: fixed;
     margin: 0 0 0 0;
+    top: 14%;
+    left: 5%;
+    transform: translate(-50%, -50%);
+    color: var(--button-color);
+    font-weight: bolder;
+}
+
+.level{
+    font-size: 25px;
+    position: fixed;
+    margin: 0 0 0 0;
     top: 8%;
     left: 5%;
     transform: translate(-50%, -50%);
+    color: var(--button-color);
+    font-weight: bolder;
 }
 
 .arrow{
@@ -198,20 +156,20 @@ input[type=text]{
 
     .Timer{
         font-size: 18px;
-        position: fixed;
-        margin: 0 0 0 0;
         top: 75%;
         left: 50%;
-        transform: translate(-50%, -50%);
     }
 
     .score{
         font-size: 18px;
-        position: fixed;
-        margin: 0 0 0 0;
         top: 8%;
         left: 5%;
-        transform: translate(-50%, -50%);
+    }
+
+    .level{
+        font-size: 18px;
+        top: 12%;
+        left: 5%;
     }
 
     #scrollable {
@@ -219,6 +177,7 @@ input[type=text]{
     } 
 
     .backgroundImage {   
+        min-width: 600px;
         z-index: -1;
         left: 50%;
         top: 50%;
@@ -230,23 +189,24 @@ input[type=text]{
 @media only screen and (max-width: 800px) {
 
     .Timer{
+        width: 80px;
         font-size: 12px;
-        position: fixed;
-        margin: 0 0 0 0;
-        top: 10%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: var(--button-color);
-        font-weight: bolder;
+        top: 18px;
+        left: 85%;
     }
 
     .score{
-        font-size: 12px;
-        position: fixed;
-        margin: 0 0 0 0;
-        top: 10%;
+        font-size: 10px;
+        top: 26px;
         left: 8%;
-        transform: translate(-50%, -50%);
+        float: left;
+    }
+
+    .level {
+        font-size: 10px;
+        top: 16px;
+        left: 8%;
+        float: left;
     }
 
     #scrollable {
@@ -254,7 +214,8 @@ input[type=text]{
     } 
 
     .backgroundImage {   
-        min-width: 400px;
+        min-width: 500px;
+        min-height: 300px;
         filter: brightness(0) invert(1);
         z-index: -1;
         left: 50%;
@@ -264,27 +225,21 @@ input[type=text]{
     }
 
     .playerText {
+        width: 30vw;
+        right: 20%;
         font-size: 10px;
     }
-
+    
     .computerText {
+        width: 30vw;
+        left: 20%;
         font-size: 10px;
     }
 
-    .sb3:before {
-        left: 0px;
-        bottom: -10px;
-    }
-
-    .sb4:before {
-        right: 0px;
-        bottom: -10px;
-    }
 
     .game--submit {
         margin-top: 10px;
         width: 205px;
         height: 30px;
     }
-
 }

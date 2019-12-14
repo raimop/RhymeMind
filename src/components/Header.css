@@ -5,6 +5,11 @@
     color: var(--header-text);
 }
 
+.header--hide {
+    height: 10px;
+    transition: height 0.1s;
+}
+
 .header:not(:hover){
     height: 10px;
     transition: height 0.1s;
@@ -19,8 +24,11 @@
     transition: opacity 0.2s;
 }
 
-.arrow {
+.header--arrow {
     color: var(--main-text);
+    float: right;
+    position: relative;
+    right: 10vw;
 }
 
 .buttons {
@@ -72,6 +80,10 @@
     }
 
     .arrow {
+        display: none;
+    }
+
+    .header--arrow {
         display: none;
     }
 }

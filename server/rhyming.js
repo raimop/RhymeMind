@@ -31,11 +31,6 @@ const compareRhyming = (pronounce1, pronounce2) => {
         }
     }
 
-    //console.log(counterArray);
-
-    console.log(`Full matches: ${fullMatchCounter} - ${b.reverse()}`);
-    console.log(`Full matches: ${fullMatchCounter} - ${a.reverse()}`);
-
     return fullMatchCounter;
 }
 
