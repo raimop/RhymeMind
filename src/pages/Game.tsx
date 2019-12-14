@@ -254,7 +254,7 @@ const InputField: React.FC <InputFieldProps> = ({ props, handleSubmit, handleCha
     return (
         <div className="input">
             <form className="form" onSubmit={ e => handleSubmit(e) }>
-                <input id="input" name="sentence" type="text" placeholder="Type your best rhyme" value={props.sentence} onChange={ e => handleChange(e) }/>
+                <input autoFocus id="input"  name="sentence" type="text" placeholder="Type your best rhyme" value={props.sentence} onChange={ e => handleChange(e) }/>
                 <button className="game--submit">SEND</button>
             </form>
         </div>
