@@ -41,7 +41,7 @@ class Game extends React.Component<IProps, IState> {
             showGameOver: false,
             sentence: "",
             sentenceArray: [],
-            computer: ["we", "me", "be"],
+            computer: ["cap", "kid", "pry", "mad", "lab", "man", "fan", "red", "que", "zoo"],
             level: 0,
             score: 0,
             timerRunning: false,
@@ -57,13 +57,8 @@ class Game extends React.Component<IProps, IState> {
     }
 
     levels = (level: number) => {
-        //const level0 = ["we", "me", "as", "be", "he"];
-        if (level === 1) return ["cap", "kid", "pry", "mad", "lab", "man", "fan", "red", "que", "zoo"];
-        if (level === 2) return ["look", "said", "sand", "fast", "mice", "cast", "king", "hand", "book", "true"];
-        if (level === 3) return ["bored", "thing", "taken", "later", "vocal", "total", "peace", "chase", "taste", "toast"];
-
-        //const level3 = [];
-        //const level4 = [];
+        if (level === 1) return ["look", "said", "sand", "fast", "mice", "cast", "king", "hand", "book", "true"];
+        if (level === 2) return ["bored", "thing", "taken", "later", "vocal", "total", "peace", "chase", "taste", "toast"];
 
         //const originalArray = ["word","cord","told","bored", "king", "thing", "cake", "wake", "bake", "placed", "taken", "later", "totally", "vocal", "fascinating", "duck", "possibility", "lavender", "damage", "generating", "liberating", "accommodating", "accelerating", "subordinating", "exasperating", "coordinating", "cap", "total", "bead", "kid", "tree", "free", "animal", "cannibal", "peace", "bullet", "mullet", "tripping", "pry", "fantastic", "flipping"];
     }

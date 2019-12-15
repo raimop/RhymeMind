@@ -31,9 +31,9 @@ class Header extends React.Component<IProps, IState> {
                 <div className="header" data-foo="sammy" onFocus={ this.toggleHeaderArrow }>
 
                     <div className="buttons">
-                        <div><Link to="/">Start screen</Link></div>
-                        <div className="header--start"><Link to="/game">Start Game</Link></div>
-                        <div><Link to="/about">About</Link></div>
+                        <div className="header--start"><Link to="/">Start screen</Link></div>
+                        <div className="header--game"><Link to="/game">Start Game</Link></div>
+                        <div className="header--about"><Link to="/about">About</Link></div>
                     </div>
                 </div>
                 { (this.state.showHeaderArrow) ? <div className="header--arrow">^ menu</div> : null }
